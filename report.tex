@@ -154,18 +154,17 @@ While these location-based games require users to physically travel to geographi
 
 In contrast, this project requires users to engage directly with the physical environment through curated, contextually relevant real-world tasks. Unlike existing systems, the primary interaction occurs within the physical environment rather than within the application itself.
 
-In the domain of navigation, Google Maps is widely used application that supports local discovery and route planning. Features such as \textit{Search This Area} allow users to explore points of interest within a geographic region, including categories such as restaurants and parks. The platform also provides optimised route planning through turn-by-turn navigation instructions, prioritising minimising travel time.
+In the domain of navigation, Google Maps is widely used application that supports local discovery and route planning. Features such as \textit{Search This Area} allow users to explore points of interest within a geographic region, including categories such as restaurants and parks. Location discovery is further supported through filtering based on various criteria, such as proximity, user ratings, and popularity. The platform also provides optimised route planning through turn-by-turn navigation instructions, prioritising minimising travel time.
 
-search within a geographic area for locations belonging to certain categories, such as restaurants or parks. Search results are curated based on proximity, user ratings, and popularity. In addition, Google Maps also provides comprehensive route planning with turn-by-turn instructions. 
+While these features support navigation and location discovery, Google Maps is designed primarily to optimise travel efficiency by identifying the fastest route to a location rather than encourage physical activity and exploration. In Google Maps, users typically specify a destination first and are subsequently guided there.
 
-While these features support location discovery and navigation, Google Maps is designed primarily to optimise travel efficiency through finding the fastest route to a location rather than encourage physical activity and exploration. In Google Maps, users select destinations and are guided to them, where CityQuest instead provides users with daily, location-backed challenges that encourage exploration, environmental interaction, and physical activity. In addition, CityQuest incorporates game mechanics to encourage exploration and movement, whereas Google Maps does not.
-
-{TODO: compare it with my project}
+In contrast, CityQuest provides users with daily, location-backed challenges that encourage exploration, environmental interaction, and physical activity. In addition, CityQuest incorporates game mechanics to encourage exploration and movement, whereas Google Maps does not.
 
 \section{Design: Software architecture (e.g. class diagram)? User interface (e.g. screen diagram)? Why this design?}
 
-We created an ERD with PlantUML during the initial system planning phase to visualise the relationships between entities within the system. As the system evolved, we updated this ERD to reflect the changes in the system. This final ERD can be see in Figure~\ref{fig:erd}. As can be seen in this ERD, there is an inherent relationship between each entity type in the database. 
-For example, users are assigned user challenges, each of which corresponds to a challenge, and each of which which has an associated category. This highly relational nature of our database influenced our decision in choosing a relational database such as PostgreSQL over a document-oriented database such as MongoDB.
+We created an ERD with PlantUML during the initial system planning phase to visualise the relationships between entities within the system. As the system evolved, we updated this ERD to reflect the changes in the system. This final ERD can be see in Figure~\ref{fig:erd}.
+
+As can be seen in this ERD, there is an inherent relationship between each entity type in the database. For example, users are assigned user challenges, each of which corresponds to a challenge, and each of which which has an associated category. This highly related nature of the entities in our data influenced our decision in choosing a relational database such as PostgreSQL over a document-oriented database such as MongoDB.
 
 \begin{figure*}[t]
     \centering
@@ -194,16 +193,20 @@ Our group created low-fidelity Figma mockups for the Challenge list, challenge m
 
 \section{Testing: How have you tested?}
 
-Testing was done using Vitest and Playwright.
-Unit tests were used to test individual functionalities.
+Backend testing was performed using Vitest. Unit tests were used to verify the functionality of individual components, while integration tests validated the database interactions, schema constraints, and trigger functionality.
+Supertest was used to test API endpoints by simulating HTTP requests and verifying that the correct response status codes and response bodies were returned.
+Additionally, TypeScript type checking was used to detect static typing errors during development.
 
-The end-to-end tests were added to the GitHub Actions CI/CD pipeline to automatically trigger. On every commit to a branch, the testing suite runs and the outcome of these tests is displayed.
+Frontend component testing was performed using Vitest and React Testing Library. These tests verified component rendering, user interactions, and application state changes within a simulated browser environment provided by jsdom.
+
+End-to-end testing was performed using Playwright. These tests validated user workflows by simulating user interactions with the application through a web browser, ensuring that the frontend and backend component functioned correctly when integrated into the overall system. The end-to-end test suite was incorporated into the GitHub Actions CI/CD pipeline to automatically execute on every commit, providing continuous verification of the application's functionality.
 
 \section{Methodology: How has your team managed the project?}
 
+\subsection{Development}
 The project adopted an iterative, sprint-based development cycle based on Agile methodologies. Work was organised into weekly sprints. At the beginning of each sprint, tasks were defined, prioritised, and allocated to individual team members. To reduce ambiguity in task completion, each task included clearly defined acceptance criteria specifying what conditions needed to be met for the task to be considered complete.
 
-The team held weekly sprint meetings to coordinate development and check-in on each member's progress. During these meetings, attendance was recorded and discussions were documented in meeting minutes for future reference. If any team member was absent, they were briefed via the team Discord server and could refer to the full meeting minutes for further information. Meeting times were scheduled each week based on the overlapping availability of all team members, collected using the scheduling tool Timeful, to maximise attendance.
+The team held weekly sprint meetings to coordinate development and check-in on each member's progress. During these meetings, attendance was recorded and discussions were documented in meeting minutes for future reference. If any team member was absent, they were briefed via the team Discord server and could refer to the full meeting minutes for further information. Meeting times were scheduled each week based on the overlapping availability of all team members, collected using the scheduling tool Timeful, to maximise attendance. Due to inconsistent team member availability and differing amounts of discussion required each week, the scheduled duration of meetings varied from week to week, and meetings were flexibly adjusted to accommodate these factors.
 
 Task prioritisation was managed using the MoSCoW method, categorising work into Must have, Should have, Could have, and Won't have (out of current scope) requirements, ordered from highest to lowest priority.
 
@@ -233,6 +236,14 @@ During the "In Review" stage, if a pull request was rejected, then the task woul
 Changes were made in sub-branches of the \textit{feature} and \textit{bug} branches. Upon a feature being completed, a pull request was made to bring those changes to the main branch, with the related issues being referenced in the pull request message. This was done to ensure the main branch only contained completed, tested features. All pull requests were peer reviewed by at least one other team member before being merged into the main branch, ensuring code quality and consistency.
 
 In addition, a Discord webhook was configured to automatically notify the team when new pull requests were created, updated, or merged. This helped keep everyone informed of ongoing changes and improved visibility of development activity without requiring constant manual checking of GitHub.
+
+\subsection{Deployment}
+The frontend was deployed as a Single Page Application (SPA) using Vercel's free tier. Vercel integrates with GitHub to automatically build and deploy the frontend whenever commits are pushed to configured branches, enabling a rapid deployment workflow.
+
+Supabase was used to host the PostgreSQL database and provide authentication services.
+The API server, which communicates with the database, was deployed as a Render web service using the free tier. Similar to the Vercel frontend deployment, Render integrates with GitHub and automatically builds and deploys the API server whenever commits are pushed to configured branches.
+
+One limitation of this deployment method is that Render's free tier service automatically spins down after 15 minutes of inactivity. When the service has spun down, the first request experiences a cold-start delay and times out while the service restarts. This startup process typically takes approximately one minute before the API becomes responsive to requests again.
 
 \section{Tooling: What tools did you use to assist the development process (e.g. git, Jira, ChatGPT, etc...)? How effective were those tools? Any drawbacks (especially with the GenAI stuff)?}
 
@@ -272,6 +283,13 @@ The following table compares, for every prioritisation category, the number of t
 \end{table}
 
 \section{Conclusion: Conclusions? Lessons learned? Reflections? Future work?}
+
+\subsection{Future Work}
+While all the core functionality of our application was met, the project can be improved to boost the engagement of users and become more accessible.
+
+One area of future work is improving the accessibility of CityQuest for users with disabilities. The current system does not include accessibility settings or provide accessibility information for challenges. CityQuest also assumes that users are able to physically travel to and interact with locations in the environment, which may exclude individuals with mobility impairments.
+
+Future iterations of the system should introduce adjustable movement requirements, allowing users with limited mobility to be assigned challenges of a shorter travel distance. Additionally, the system could incorporate accessible route generation and provide accessibility information for each challenge location to better support participation among a diverse user base.
 
 %\bibliographystyle{abbrv}
 \bibliographystyle{abbrv-doi}
