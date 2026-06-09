@@ -134,7 +134,6 @@ Beyond physical activity, environmental interaction how people learn to navigate
 
 This project addresses both objectives by employing gamified, navigation-based activities that promote exploration and interaction with local environments, with the aim of increasing environmental familiarity and physical activity levels.
 
-
 \section{Goals}
 
 Create a GPS-based city exploration game that rewards movement and exploration of the local environment.
@@ -144,7 +143,6 @@ Create a GPS-based city exploration game that rewards movement and exploration o
     \item Promote environmental familiarity through interaction with local landmarks and points of interest.
     \item Promote an engaging, gamified alternative to traditional navigation tools.
 \end{itemize}
-
 
 \section{Related Work}
 
@@ -164,8 +162,6 @@ In contrast, CityQuest provides users with daily, location-backed challenges tha
 
 We created an ERD with PlantUML during the initial system planning phase to visualise the relationships between entities within the system. As the system evolved, we updated this ERD to reflect the changes in the system. This final ERD can be see in Figure~\ref{fig:erd}.
 
-As can be seen in this ERD, there is an inherent relationship between each entity type in the database. For example, users are assigned user challenges, each of which corresponds to a challenge, and each of which which has an associated category. This highly related nature of the entities in our data influenced our decision in choosing a relational database such as PostgreSQL over a document-oriented database such as MongoDB.
-
 \begin{figure*}[t]
     \centering
     \includegraphics[width=0.7\linewidth]{erd.png}
@@ -173,7 +169,9 @@ As can be seen in this ERD, there is an inherent relationship between each entit
     \label{fig:erd}
 \end{figure*}
 
-Our group created low-fidelity Figma mockups for the Challenge list, challenge map, achievements, and profile pages of the frontend system user interface, as can be see in Figures~\ref{fig:mockup-1} and~\ref{fig:mockup-2}. These prototypes were created to serve as inspiration for the in-development system, identify early and UX concerns, and ensure all group members had a consistent vision for the system.
+As can be seen in this ERD, there is an inherent relationship between each entity type in the database. For example, users are assigned user challenges, each of which corresponds to a challenge, and each of which which has an associated category. This highly related nature of the entities in our data influenced our decision in choosing a relational database such as PostgreSQL over a document-oriented database such as MongoDB.
+
+Low-fidelity Figma mockups were created for the Challenge list, challenge map, achievements, and profile pages of the frontend system user interface, as can be see in Figures~\ref{fig:mockup-1} and~\ref{fig:mockup-2}. These prototypes were created to serve as inspiration for the in-development system, identify early and UX concerns, and ensure all group members had a consistent vision for the system.
 
 \begin{figure}
     \centering
@@ -191,6 +189,8 @@ Our group created low-fidelity Figma mockups for the Challenge list, challenge m
 
 \section{Implementation: What have you implemented?}
 
+
+
 \section{Testing: How have you tested?}
 
 Backend testing was performed using Vitest. Unit tests were used to verify the functionality of individual components, while integration tests validated the database interactions, schema constraints, and trigger functionality.
@@ -200,6 +200,29 @@ Additionally, TypeScript type checking was used to detect static typing errors d
 Frontend component testing was performed using Vitest and React Testing Library. These tests verified component rendering, user interactions, and application state changes within a simulated browser environment provided by jsdom.
 
 End-to-end testing was performed using Playwright. These tests validated user workflows by simulating user interactions with the application through a web browser, ensuring that the frontend and backend component functioned correctly when integrated into the overall system. The end-to-end test suite was incorporated into the GitHub Actions CI/CD pipeline to automatically execute on every commit, providing continuous verification of the application's functionality.
+
+One limitation of the testing suite is a lack of code test coverage analysis. While the unit, integration, and end-to-end tests provide functionality assurances across many components of both the backend and frontend codebases, there is no coverage testing set up to measure how much of the source code is executed during testing. As a result, there may be hidden bugs in these areas of the codebase that are not detected from running the test suite. 
+For the purpose of this report, test coverage analysis with Vitest was conducted for the frontend and backend codebases, the results of which are summarised in Table~\ref{tab:coverage-tests}. Full results can be found in the Figures~\ref{fig:frontend-coverage} and~\ref{fig:backend-coverage}.
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|c|c|c|c|c|}
+        \hline
+        \makecell{Module} & 
+        \makecell{Statement\\Coverage} &
+        \makecell{Branch\\Coverage} &
+        \makecell{Functions\\Coverage} &
+        \makecell{Line\\Coverage} \\
+        \hline
+        Frontend & 79.14\% & 70.16\% & 77.3\% & 82.1\% \\
+        Backend & 73.65\% & 61.22\% & 67.11\% & 74.02\% \\
+        \hline
+    \end{tabular}
+    \caption{Frontend Test Coverage by Codebase}
+    \label{tab:coverage-tests}
+\end{table}
+
+As can be seen in the Table~\ref{tab:coverage-tests} and Figures~\ref{fig:frontend-coverage} and~\ref{fig:backend-coverage}, the frontend achieves higher coverage than the backend in all metrics. This suggests that frontend components are tested more thoroughly by the test suite. The most significant gap missed by the test suite is the Domain Access Objects (DAOs), with a branch coverage of 0\%.
 
 \section{Methodology: How has your team managed the project?}
 
@@ -284,12 +307,31 @@ The following table compares, for every prioritisation category, the number of t
 
 \section{Conclusion: Conclusions? Lessons learned? Reflections? Future work?}
 
+\subsection{Lessons Learned}
+
+
 \subsection{Future Work}
 While all the core functionality of our application was met, the project can be improved to boost the engagement of users and become more accessible.
 
 One area of future work is improving the accessibility of CityQuest for users with disabilities. The current system does not include accessibility settings or provide accessibility information for challenges. CityQuest also assumes that users are able to physically travel to and interact with locations in the environment, which may exclude individuals with mobility impairments.
 
 Future iterations of the system should introduce adjustable movement requirements, allowing users with limited mobility to be assigned challenges of a shorter travel distance. Additionally, the system could incorporate accessible route generation and provide accessibility information for each challenge location to better support participation among a diverse user base.
+
+\section{Appendix}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.95\linewidth]{pictures/Frontend-Coverage.png}
+    \caption{Frontend Coverage Analysis Results}
+    \label{fig:frontend-coverage}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.95\linewidth]{pictures/Backend-Coverage.png}
+    \caption{Backend Coverage Analysis Results}
+    \label{fig:backend-coverage}
+\end{figure}
 
 %\bibliographystyle{abbrv}
 \bibliographystyle{abbrv-doi}
@@ -298,4 +340,5 @@ Future iterations of the system should introduce adjustable movement requirement
 %\bibliographystyle{abbrv-doi-hyperref-narrow}
 
 \bibliography{references}
+
 \end{document}
