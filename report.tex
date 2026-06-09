@@ -171,27 +171,27 @@ As can be seen in the ERD, there is an inherent relationship between each entity
     \item \textbf{Supabase Auth} was used to handle user authentication and account management. This was chosen for its simple integration into the Supabase ecosystem, and because it is a widely used, secure authentication service so reduces security risks compared to developing a custom authentication service from scratch.
     \item \textbf{Google OAuth} was chosen to provide a convenient, secure sign-in method. By allowing users to sign-in with an existing Google account, the registration process is faster. Furthermore, using a passwordless sign-in option means there is no risk of the user's password being exposed in the event of a data breach as we do not store any passwords.
     \item \textbf{Express} was used to implement the application's API layer. Express was chosen because it is lightweight and accelerates development through hot reloading, where the API server restarts itself when it detects changes made in development. The Express API server handles the business logic, routing, and communication between the frontend web server and backend database.
-    \item \textbf{TypeScript}
+    \item \textbf{TypeScript} was used to extend JavaScript to support type safety, catching type errors and allowing for IDE auto completion and suggestions.
 \end{itemize}
 
 \subsection{Frontend}
 \begin{itemize}
-    \item \textbf{React}
-    \item \textbf{Vite}
+    \item \textbf{React} was chosen for building the user interface due to its component-based architecture. When the application state changes, React efficiently updates only the effected UI components rather than reloading the entire page.
+    \item \textbf{Vite} was chosen as the build tool for React as it offers a fast development server, hot reloading on changes, and a simple build process for easy deployment.
     \item \textbf{TypeScript}
 \end{itemize}
 
 \subsection{User Interface}
 Low-fidelity Figma mockups were created for the Challenge list, challenge map, achievements, and profile pages of the frontend system user interface, as can be see in Figures~\ref{fig:mockup-1} and~\ref{fig:mockup-2}. These prototypes were created to serve as inspiration for the in-development system, identify early and UX concerns, and ensure all group members had a consistent vision for the system.
 
-\begin{figure}[H]
+\begin{figure}[htbp]
     \centering
     \includegraphics[width=0.9\linewidth]{Figma-1.png}
     \caption{Figma mockups of the Achievements and Map view pages}
     \label{fig:mockup-1}
 \end{figure}
 
-\begin{figure}[H]
+\begin{figure}[htbp]
     \centering
     \includegraphics[width=0.9\linewidth]{Figma-2.png}
     \caption{Figma mockups of the Profile and Challenge view pages}
@@ -201,7 +201,7 @@ Low-fidelity Figma mockups were created for the Challenge list, challenge map, a
 \section{Implementation: What have you implemented?}
 
 
-\section{Testing: How have you tested?}
+\section{Testing}
 
 Backend testing was performed using Vitest. Unit tests were used to verify the functionality of individual components, while integration tests validated the database interactions, schema constraints, and trigger functionality.
 Supertest was used to test API endpoints by simulating HTTP requests and verifying that the correct response status codes and response bodies were returned.
@@ -212,9 +212,9 @@ Frontend component testing was performed using Vitest and React Testing Library.
 End-to-end testing was performed using Playwright. These tests validated user workflows by simulating user interactions with the application through a web browser, ensuring that the frontend and backend component functioned correctly when integrated into the overall system. The end-to-end test suite was incorporated into the GitHub Actions CI/CD pipeline to automatically execute on every commit, providing continuous verification of the application's functionality.
 
 One limitation of the testing suite is a lack of code test coverage analysis. While the unit, integration, and end-to-end tests provide functionality assurances across many components of both the backend and frontend codebases, there is no coverage testing set up to measure how much of the source code is executed during testing. As a result, there may be hidden bugs in these areas of the codebase that are not detected from running the test suite. 
-For the purpose of this report, test coverage analysis with Vitest was conducted for the frontend and backend codebases, the results of which are summarised in Table~\ref{tab:coverage-tests}. Full results can be found in the Figures~\ref{fig:frontend-coverage} and~\ref{fig:backend-coverage}.
+For the purpose of this report, test coverage analysis with Vitest was conducted for the frontend and backend codebases, the results of which are summarised in Table~\ref{tab:coverage-tests}. Full results can be found in the Figures~\ref{fig:frontend-coverage} and~\ref{fig:backend-coverage} within the Appendix.
 
-\begin{table}[H]
+\begin{table}[htbp]
     \centering
     \begin{tabular}{|c|c|c|c|c|}
         \hline
@@ -245,7 +245,7 @@ Task prioritisation was managed using the MoSCoW method, categorising work into 
 
 For each task that we created, we added a corresponding issue ticket to GitHub. Commits referenced these issues so that team members could easily trace changes back to specific commits. Tasks were organised and tracked using a Github Projects Kanban board which provided a visual representation of the progress of the project and current sprint. Table~\ref{tab:kanban} outlines the different Kanban board task categories and their status.
 
-\begin{table}[H]
+\begin{table}[htbp]
     \centering
     \begin{tabular}{|c|c|}
         \hline
@@ -299,7 +299,7 @@ Of these tasks, all must haves were completed, all should haves, 2 could haves, 
 
 The following table compares, for every prioritisation category, the number of tasks completed vs the number of tasks assigned.
 
-\begin{table}[H]
+\begin{table}[htbp]
     \centering
     \begin{tabular}{|c|c|c|c|}
         \hline
