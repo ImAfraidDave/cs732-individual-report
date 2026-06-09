@@ -1,4 +1,4 @@
-% $Id: template.tex 11 2007-04-03 22:25:53Z jpeltier $
+% $Id: report.tex 11 2007-04-03 22:25:53Z jpeltier $
 
 \documentclass{vgtc}                          % final (conference style)
 % \documentclass[onecolumn]{vgtc}             % one column
@@ -130,7 +130,7 @@ Less than half of the New Zealand population meets recommended physical activity
 
 A systematic review and meta-analysis found that gamification interventions are effective at promoting physical activity across diverse age groups and genders and may outperform alternative interventions \cite{mazeas2022gamification}. Gamification therefore presents a promising approach for encouraging physical activity while maintaining user motivation and engagement.
 
-Beyond physical activity, environmental interaction how people learn to navigate their surroundings. Environmental familiarity has been associated with improved wayfinding performance, including reduced navigation errors and shorter route completion times \cite{ONEILL1992319}. In addition, repeated exposure to an environment has been shown to support the acquisition of spatial knowledge in multiple dimensions, including landmark recognition and route learning \cite{YING2026103031}. Together, these findings suggest that increasing familiarity with local environments may improve users' navigation ability through the development of stronger spatial knowledge.
+Beyond physical activity, environmental interaction may influence how people learn to navigate their surroundings. Environmental familiarity has been associated with improved wayfinding performance, including reduced navigation errors and shorter route completion times \cite{ONEILL1992319}. In addition, repeated exposure to an environment has been shown to support the acquisition of spatial knowledge in multiple dimensions, including landmark recognition and route learning \cite{YING2026103031}. Together, these findings suggest that increasing familiarity with local environments may improve users' navigation ability through the development of stronger spatial knowledge.
 
 This project addresses both objectives by employing gamified, navigation-based activities that promote exploration and interaction with local environments, with the aim of increasing environmental familiarity and physical activity levels.
 
@@ -146,41 +146,52 @@ Create a GPS-based city exploration game that rewards movement and exploration o
 
 \section{Related Work}
 
-Several existing solutions incorporate location-based interaction and exploration-based gameplay. Notable examples include \textit{Pokemon Go} and \textit{Ingress}, both of which use GPS-backed movement as a core gameplay mechanic to encourage real-world exploration and physical activity.  
+Several existing solutions incorporate location-based interaction and exploration-based gameplay. Notable examples include \textit{Pokemon Go}\cite{pokemon_go} and \textit{Ingress}\cite{ingress}, both of which use GPS-backed movement as a core gameplay mechanic to encourage real-world exploration and physical activity.  
 
 While these location-based games require users to physically travel to geographic locations, interaction with these environments is primarily mediated through game mechanics rather than direct engagement with the world. In these systems, players interact with virtual elements overlaid on geographic locations, such as collecting items or capturing creatures.
 
 In contrast, this project requires users to engage directly with the physical environment through curated, contextually relevant real-world tasks. Unlike existing systems, the primary interaction occurs within the physical environment rather than within the application itself.
 
-In the domain of navigation, Google Maps is widely used application that supports local discovery and route planning. Features such as \textit{Search This Area} allow users to explore points of interest within a geographic region, including categories such as restaurants and parks. Location discovery is further supported through filtering based on various criteria, such as proximity, user ratings, and popularity. The platform also provides optimised route planning through turn-by-turn navigation instructions, prioritising minimising travel time.
+In the domain of navigation, Google Maps\cite{google_maps} is a widely used application that supports local discovery and route planning. Features such as \textit{Search This Area} allow users to explore points of interest within a geographic region, including categories such as restaurants and parks. Location discovery is further supported through filtering based on various criteria, such as proximity, user ratings, and popularity. The platform also provides optimised route planning through turn-by-turn navigation instructions, prioritising minimising travel time.
 
 While these features support navigation and location discovery, Google Maps is designed primarily to optimise travel efficiency by identifying the fastest route to a location rather than encourage physical activity and exploration. In Google Maps, users typically specify a destination first and are subsequently guided there.
 
 In contrast, CityQuest provides users with daily, location-backed challenges that encourage exploration, environmental interaction, and physical activity. In addition, CityQuest incorporates game mechanics to encourage exploration and movement, whereas Google Maps does not.
 
-\section{Design: Software architecture (e.g. class diagram)? User interface (e.g. screen diagram)? Why this design?}
+\section{Design}
 
 We created an ERD with PlantUML during the initial system planning phase to visualise the relationships between entities within the system. As the system evolved, we updated this ERD to reflect the changes in the system. This final ERD can be see in Figure~\ref{fig:erd}.
 
-\begin{figure*}[t]
-    \centering
-    \includegraphics[width=0.7\linewidth]{erd.png}
-    \caption{Entity Relationship Diagram of the CityQuest project}
-    \label{fig:erd}
-\end{figure*}
+As can be seen in the ERD, there is an inherent relationship between each entity type in the database. For example, users are assigned user challenges, each of which corresponds to a challenge, and each of which which has an associated category. This highly related nature of the entities in our data influenced our decision in choosing a relational database such as PostgreSQL over a document-oriented database such as MongoDB.
 
-As can be seen in this ERD, there is an inherent relationship between each entity type in the database. For example, users are assigned user challenges, each of which corresponds to a challenge, and each of which which has an associated category. This highly related nature of the entities in our data influenced our decision in choosing a relational database such as PostgreSQL over a document-oriented database such as MongoDB.
+\subsection{Tech Stack}
+\subsection{Backend}
+\begin{itemize}
+    \item \textbf{Prisma} was used as an ORM to provide type-safe access to the database and simplify code by minimising having to write complex SQL queries. Its generated TypeScript files improve developer productivity by enabling autocompletion.
+    \item \textbf{Supabase Auth} was used to handle user authentication and account management. This was chosen for its simple integration into the Supabase ecosystem, and because it is a widely used, secure authentication service so reduces security risks compared to developing a custom authentication service from scratch.
+    \item \textbf{Google OAuth} was chosen to provide a convenient, secure sign-in method. By allowing users to sign-in with an existing Google account, the registration process is faster. Furthermore, using a passwordless sign-in option means there is no risk of the user's password being exposed in the event of a data breach as we do not store any passwords.
+    \item \textbf{Express} was used to implement the application's API layer. Express was chosen because it is lightweight and accelerates development through hot reloading, where the API server restarts itself when it detects changes made in development. The Express API server handles the business logic, routing, and communication between the frontend web server and backend database.
+    \item \textbf{TypeScript}
+\end{itemize}
 
+\subsection{Frontend}
+\begin{itemize}
+    \item \textbf{React}
+    \item \textbf{Vite}
+    \item \textbf{TypeScript}
+\end{itemize}
+
+\subsection{User Interface}
 Low-fidelity Figma mockups were created for the Challenge list, challenge map, achievements, and profile pages of the frontend system user interface, as can be see in Figures~\ref{fig:mockup-1} and~\ref{fig:mockup-2}. These prototypes were created to serve as inspiration for the in-development system, identify early and UX concerns, and ensure all group members had a consistent vision for the system.
 
-\begin{figure}
+\begin{figure}[H]
     \centering
     \includegraphics[width=0.9\linewidth]{Figma-1.png}
     \caption{Figma mockups of the Achievements and Map view pages}
     \label{fig:mockup-1}
 \end{figure}
 
-\begin{figure}
+\begin{figure}[H]
     \centering
     \includegraphics[width=0.9\linewidth]{Figma-2.png}
     \caption{Figma mockups of the Profile and Challenge view pages}
@@ -188,7 +199,6 @@ Low-fidelity Figma mockups were created for the Challenge list, challenge map, a
 \end{figure}
 
 \section{Implementation: What have you implemented?}
-
 
 
 \section{Testing: How have you tested?}
@@ -268,11 +278,17 @@ The API server, which communicates with the database, was deployed as a Render w
 
 One limitation of this deployment method is that Render's free tier service automatically spins down after 15 minutes of inactivity. When the service has spun down, the first request experiences a cold-start delay and times out while the service restarts. This startup process typically takes approximately one minute before the API becomes responsive to requests again.
 
-\section{Tooling: What tools did you use to assist the development process (e.g. git, Jira, ChatGPT, etc...)? How effective were those tools? Any drawbacks (especially with the GenAI stuff)?}
+\section{Tooling}
 
 Generative AI was used by some team members to increase efficiency, particularly for menial tasks where the code is easy to validate. 
 
 Copilot code review was used in multiple instances to check for any bugs, syntax errors, and suggest considerations. However, this was not used as a substitute to human-run peer reviews but rather in addition to; all pull requests to the main branch were peer reviewed by at least one other team member.
+
+Git and GitHub were used throughout development for version control and collaboration. The use of feature branches and pull requests allowed team members to work independently and minimise merge conflicts while ensuring stability of the main branch. 
+
+Git and GitHub was used frequently throughout the development process for version control and collaboration. Feature branches enabled team members to develop features independently while reducing the risk of introducing unstable code into the main branch. GitHub's pull request system supported peer reviews and discussion before changes were merged to main.
+
+While Git was highly effective overall, its use came with some difficulties. In two separate instances, contributors accidentally pushed commits directly to the main branch rather than through the pull request process, unintentionally bypassing the intended review process. Team members also occasionally made commits using incorrect Git email addresses due to configuration issues, resulting in some team members' contributions being split between their alternate accounts. Despite these challenges, the Git version control system was very effective in supporting collaborative development.
 
 \section{Discussion: Have the goals been achieved? Problems?}
 
@@ -318,6 +334,13 @@ One area of future work is improving the accessibility of CityQuest for users wi
 Future iterations of the system should introduce adjustable movement requirements, allowing users with limited mobility to be assigned challenges of a shorter travel distance. Additionally, the system could incorporate accessible route generation and provide accessibility information for each challenge location to better support participation among a diverse user base.
 
 \section{Appendix}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1.05\linewidth]{erd.png}
+    \caption{Entity Relationship Diagram of the CityQuest project}
+    \label{fig:erd}
+\end{figure}
 
 \begin{figure}[H]
     \centering
