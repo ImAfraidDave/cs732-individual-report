@@ -113,46 +113,52 @@
 
 \begin{document}
 
+
 %% The ``\maketitle'' command must be the first command after the
 %% ``\begin{document}'' command. It prepares and prints the title block.
-
 %% the only exception to this rule is the \firstsection command
-
 \maketitle
 
+\firstsection{}
+\textbf{Abstract---CityQuest is a GPS-based mobile exploration game designed to encourage physical activity and improve users' familiarity with urban environments through navigation-based tasks.
+The system assigns challenges at locations within the city that users must travel to in order to complete. Gamification elements such as streaks, levels, badges, and leaderboards are employed to increase user motivation and engagement.
+This report outlines the motivation, design, and implementation of this system developed for the COMPSCI 732 course, with a particular focus on methodology and tooling, and compares it to existing solutions.}
+
 %% \section{Introduction} %for journal use above \firstsection{..} instead
-\section{Abstract}
-
-CityQuest is a GPS-based mobile exploration game designed to encourage physical activity and improve users' familiarity with urban environments through navigation-based tasks.
-
-The system assigns challenges at locations within the city that the user must travel to in order to complete. Gamification elements, such as streaks, levels, badges, and leaderboards are employed to make the system more motivating to users.
-
-This report outlines the motivation, design, and implementation of this system developed for the COMPSCI 732 course, with a particular focus on methodology and tooling, and compares it to existing solutions. 
 
 \section{Introduction: Introduce and motivate the project.} 
 
-Tourists and new residents to a city often report difficulty with navigation {TODO: citation/data needed}. One key motive of this project is to aid these individuals in familiarising them with the area through gamified challenges which employ their navigation skills.
+Less than half of the New Zealand population meets recommended physical activity guidelines \cite{PhysicalActivityProfilesandPerceivedEnvironmentalDeterminantsinNewZealandANationalCrossSectionalStudy}. This highlights the need for interventions that encourage greater participation in physical activity and increase user engagement.
 
-Additionally, a significant percent of the population do not meet daily exercise recommendations {TODO: citation needed}, and sedentary lifestyles are becoming increasingly common {TODO: citation needed}.
+A systematic review and meta-analysis found that gamification interventions are effective at promoting physical activity across diverse age groups and genders and may outperform alternative interventions \cite{mazeas2022gamification}. Gamification therefore presents a promising approach for encouraging physical activity while maintaining user motivation and engagement.
 
-Existing research shows the effectiveness of gamification  in exercise {TODO: citation needed, what was found?}.
+Beyond physical activity, environmental interaction how people learn to navigate their surroundings. Environmental familiarity has been associated with improved wayfinding performance, including reduced navigation errors and shorter route completion times \cite{ONEILL1992319}. In addition, repeated exposure to an environment has been shown to support the acquisition of spatial knowledge in multiple dimensions, including landmark recognition and route learning \cite{YING2026103031}. Together, these findings suggest that increasing familiarity with local environments may improve users' navigation ability through the development of stronger spatial knowledge.
+
+This project addresses both objectives by employing gamified, navigation-based activities that promote exploration and interaction with local environments, with the aim of increasing environmental familiarity and physical activity levels.
+
 
 \section{Goals}
 
 Create a GPS-based city exploration game that rewards movement and exploration of the local environment.
 
 \begin{itemize}
-    \item Encourage physical activity by rewarding users for walking and through fitness challenges.
-    \item Improve users' familiarisation with their environment through interactions with local landmarks and points of interest.
-    \item Provide an engaging, gamified alternative to traditional navigation tools.
+    \item Encourage physical activity through gameplay that requires movement, reinforced by reward-based incentives.
+    \item Promote environmental familiarity through interaction with local landmarks and points of interest.
+    \item Promote an engaging, gamified alternative to traditional navigation tools.
 \end{itemize}
 
 
 \section{Related Work: What has been done before? Compare it with your project.}
 
-Multiple existing exploration-based games exist. Notable examples include Pokemon Go and Ingress, both of which use GPS-backed movement tracking as a core gameplay mechanic.  
+Several existing solutions incorporate location-based interaction and exploration-based gameplay. Notable examples include \textit{Pokemon Go} and \textit{Ingress}, both of which use GPS-backed movement as a core gameplay mechanic to encourage real-world exploration and physical activity.  
 
-Google Maps is widely used navigation platform that supports users discovering nearby locations through features such as \textit{Search This Area}, which allows users to search within a geographic area for locations belonging to certain categories, such as restaurants or parks. Search results are curated based on proximity, user ratings, and popularity. In addition, Google Maps also provides comprehensive route planning with turn-by-turn instructions. 
+While these location-based games require users to physically travel to geographic locations, interaction with these environments is primarily mediated through game mechanics rather than direct engagement with the world. In these systems, players interact with virtual elements overlaid on geographic locations, such as collecting items or capturing creatures.
+
+In contrast, this project requires users to engage directly with the physical environment through curated, contextually relevant real-world tasks. Unlike existing systems, the primary interaction occurs within the physical environment rather than within the application itself.
+
+In the domain of navigation, Google Maps is widely used application that supports local discovery and route planning. Features such as \textit{Search This Area} allow users to explore points of interest within a geographic region, including categories such as restaurants and parks. The platform also provides optimised route planning through turn-by-turn navigation instructions, prioritising minimising travel time.
+
+search within a geographic area for locations belonging to certain categories, such as restaurants or parks. Search results are curated based on proximity, user ratings, and popularity. In addition, Google Maps also provides comprehensive route planning with turn-by-turn instructions. 
 
 While these features support location discovery and navigation, Google Maps is designed primarily to optimise travel efficiency through finding the fastest route to a location rather than encourage physical activity and exploration. In Google Maps, users select destinations and are guided to them, where CityQuest instead provides users with daily, location-backed challenges that encourage exploration, environmental interaction, and physical activity. In addition, CityQuest incorporates game mechanics to encourage exploration and movement, whereas Google Maps does not.
 
@@ -253,5 +259,3 @@ The following table compares, for every prioritisation category, the number of t
 
 \bibliography{template}
 \end{document}
-
-
