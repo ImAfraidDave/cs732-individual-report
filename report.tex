@@ -1,4 +1,4 @@
-% $Id: report.tex 11 2007-04-03 22:25:53Z jpeltier $
+% $Id: template.tex 11 2007-04-03 22:25:53Z jpeltier $
 
 \documentclass{vgtc}                          % final (conference style)
 % \documentclass[onecolumn]{vgtc}             % one column
@@ -124,7 +124,7 @@ This report outlines the motivation, design, and implementation of this system d
 
 %% \section{Introduction} %for journal use above \firstsection{..} instead
 
-\section{Introduction: Introduce and motivate the project.} 
+\section{Introduction} 
 
 Less than half of the New Zealand population meets recommended physical activity guidelines \cite{PhysicalActivityProfilesandPerceivedEnvironmentalDeterminantsinNewZealandANationalCrossSectionalStudy}. This highlights the need for interventions that encourage greater participation in physical activity and increase user engagement.
 
@@ -146,7 +146,7 @@ Create a GPS-based city exploration game that rewards movement and exploration o
 \end{itemize}
 
 
-\section{Related Work: What has been done before? Compare it with your project.}
+\section{Related Work}
 
 Several existing solutions incorporate location-based interaction and exploration-based gameplay. Notable examples include \textit{Pokemon Go} and \textit{Ingress}, both of which use GPS-backed movement as a core gameplay mechanic to encourage real-world exploration and physical activity.  
 
@@ -201,14 +201,38 @@ The end-to-end tests were added to the GitHub Actions CI/CD pipeline to automati
 
 \section{Methodology: How has your team managed the project?}
 
-Our team took part in weekly sprint meetings. During these meetings we took attendance and recorded all discussions as meeting minutes. This was done for future reference; if there is any uncertainty about what was discussed, team members can check the minute meetings to see what was discussed and what decisions were decided upon.
-During the weekly sprints, we made a list of tasks to be completed this sprint and assigned each task to a person. To avoid ambiguity over whether a task's functionality has been fulfilled, for each task we clearly described what criteria would have to be met for that task to be marked as completed.
+The project adopted an iterative, sprint-based development cycle based on Agile methodologies. Work was organised into weekly sprints. At the beginning of each sprint, tasks were defined, prioritised, and allocated to individual team members. To reduce ambiguity in task completion, each task included clearly defined acceptance criteria specifying what conditions needed to be met for the task to be considered complete.
 
-We used the MoSCoW method to prioritise tasks, grouping tasks by labels denoting their importance to the project, in order from most important to least important: Must haves, Should haves, Could haves, and Won't haves (out of scope).
+The team held weekly sprint meetings to coordinate development and check-in on each member's progress. During these meetings, attendance was recorded and discussions were documented in meeting minutes for future reference. If any team member was absent, they were briefed via the team Discord server and could refer to the full meeting minutes for further information. Meeting times were scheduled each week based on the overlapping availability of all team members, collected using the scheduling tool Timeful, to maximise attendance.
 
-{TODO: Mention PR reviews.}
+Task prioritisation was managed using the MoSCoW method, categorising work into Must have, Should have, Could have, and Won't have (out of current scope) requirements, ordered from highest to lowest priority.
 
-For each task that we created, we added a corresponding issue ticket to GitHub. Commits referenced these issues so that team members can see what commits are responsible. Each pull request has a issue linked and was done in a suitable branch, so that viewing the commit history makes it clear which commits effect which issue.
+For each task that we created, we added a corresponding issue ticket to GitHub. Commits referenced these issues so that team members could easily trace changes back to specific commits. Tasks were organised and tracked using a Github Projects Kanban board which provided a visual representation of the progress of the project and current sprint. Table~\ref{tab:kanban} outlines the different Kanban board task categories and their status.
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|c|c|}
+        \hline
+        Category & 
+        Task Status \\
+        \hline
+        Product Backlog & Not yet assigned to a sprint \\
+        To Be Decided & Not yet assigned to a team member \\
+        Sprint Backlog & Part of the active sprint but not started \\
+        In Progress & Actively being worked on \\
+        In Review & Completed pending pull request approval \\
+        Done & Completed \\
+        \hline
+    \end{tabular}
+    \caption{Kanban board categories}
+    \label{tab:kanban}
+\end{table}
+
+During the "In Review" stage, if a pull request was rejected, then the task would be moved backwards to the "In Progress" status and then later moved forward to "In Review" again upon the requested changes being made.
+
+Changes were made in sub-branches of the \textit{feature} and \textit{bug} branches. Upon a feature being completed, a pull request was made to bring those changes to the main branch, with the related issues being referenced in the pull request message. This was done to ensure the main branch only contained completed, tested features. All pull requests were peer reviewed by at least one other team member before being merged into the main branch, ensuring code quality and consistency.
+
+In addition, a Discord webhook was configured to automatically notify the team when new pull requests were created, updated, or merged. This helped keep everyone informed of ongoing changes and improved visibility of development activity without requiring constant manual checking of GitHub.
 
 \section{Tooling: What tools did you use to assist the development process (e.g. git, Jira, ChatGPT, etc...)? How effective were those tools? Any drawbacks (especially with the GenAI stuff)?}
 
