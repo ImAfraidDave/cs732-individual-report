@@ -120,7 +120,7 @@
 \firstsection{}
 \textbf{Abstract---CityQuest is a GPS-based mobile exploration game designed to encourage physical activity and improve users' familiarity with urban environments through navigation-based tasks.
 The system assigns challenges at locations within the city that users must travel to in order to complete. Gamification elements such as streaks, levels, badges, and leaderboards are employed to increase user motivation and engagement.
-This report outlines the motivation, design, and implementation of this system developed for the COMPSCI 732 course, with a particular focus on methodology and tooling, and compares it to existing solutions.}
+This report outlines the motivation, design, and implementation of this system developed for the COMPSCI 732 course, and compares it to existing solutions.}
 
 %% \section{Introduction} %for journal use above \firstsection{..} instead
 
@@ -200,6 +200,32 @@ Low-fidelity Figma mockups were created for the Challenge list, challenge map, a
 
 \section{Implementation: What have you implemented?}
 
+The system implements a location-based challenge workflow. The sequence diagram in Figure~\ref{fig:sequence-diagram} outlines the full interaction flow between the user, frontend web server, backend API and database, and external services.
+
+When a user opens the application and navigates to the challenge list page, they are presented with a list of nearby, available daily challenges retrieved from the backend. These challenges include metadata such as category (e.g. fitness, social, nature) and location (e.g. a nearby park or restaurant). The user can then select and accept a challenge.
+
+After accepting a challenge, the user can click the \textit{View Route} button which displays a focused map view displaying the user's current location, the challenge location marker, and the router between them. This allows the user to navigate to the challenge location.
+
+Once the user arrives at the location, they perform a check-in by pressing the \textit{Check-In} button on the active challenge view. This triggers the frontend to send the user's current location to the backend API, where it is validated to ensure the user is within the required geospatial proximity. If validation is successful, the challenge is marked as complete in the backend database.
+
+Completion of a challenge triggers several backend updates, including awarding experience points, recalculating the user's level, updating the user's daily streak, and user statistics. When the \texttt{user\_stats} table is updated, a PostgreSQL trigger evaluates the badge criteria table to determine whether any badge requirements have been satisfied. If all criteria for a badge are met, the badge is awarded to the user.
+
+Finally, the backend passes the updated experience, level and badge information to the frontend. The user interface displays a celebratory confetti animation, notifications for any newly earned badges, and an updated experience progress bar animation.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.9\linewidth]{pictures/sequence-diagram.png}
+    \caption{Sequence diagram for the challenge participation workflow}
+    \label{fig:sequence-diagram}
+\end{figure}
+
+\subsection{Deployment}
+The frontend was deployed as a Single Page Application (SPA) using Vercel's free tier. Vercel integrates with GitHub to automatically build and deploy the frontend whenever commits are pushed to configured branches, enabling a rapid deployment workflow.
+
+Supabase was used to host the PostgreSQL database and provide authentication services.
+The API server, which communicates with the database, was deployed as a Render web service using the free tier. Similar to the Vercel frontend deployment, Render integrates with GitHub and automatically builds and deploys the API server whenever commits are pushed to configured branches.
+
+One limitation of this deployment method is that Render's free tier service automatically spins down after 15 minutes of inactivity. When the service has spun down, the first request experiences a cold-start delay and times out while the service restarts. This startup process typically takes approximately one minute before the API becomes responsive to requests again.
 
 \section{Testing}
 
@@ -234,9 +260,8 @@ For the purpose of this report, test coverage analysis with Vitest was conducted
 
 As can be seen in the Table~\ref{tab:coverage-tests} and Figures~\ref{fig:frontend-coverage} and~\ref{fig:backend-coverage}, the frontend achieves higher coverage than the backend in all metrics. This suggests that frontend components are tested more thoroughly by the test suite. The most significant gap missed by the test suite is the Domain Access Objects (DAOs), with a branch coverage of 0\%.
 
-\section{Methodology: How has your team managed the project?}
+\section{Methodology}
 
-\subsection{Development}
 The project adopted an iterative, sprint-based development cycle based on Agile methodologies. Work was organised into weekly sprints. At the beginning of each sprint, tasks were defined, prioritised, and allocated to individual team members. To reduce ambiguity in task completion, each task included clearly defined acceptance criteria specifying what conditions needed to be met for the task to be considered complete.
 
 The team held weekly sprint meetings to coordinate development and check-in on each member's progress. During these meetings, attendance was recorded and discussions were documented in meeting minutes for future reference. If any team member was absent, they were briefed via the team Discord server and could refer to the full meeting minutes for further information. Meeting times were scheduled each week based on the overlapping availability of all team members, collected using the scheduling tool Timeful, to maximise attendance. Due to inconsistent team member availability and differing amounts of discussion required each week, the scheduled duration of meetings varied from week to week, and meetings were flexibly adjusted to accommodate these factors.
@@ -269,14 +294,6 @@ During the "In Review" stage, if a pull request was rejected, then the task woul
 Changes were made in sub-branches of the \textit{feature} and \textit{bug} branches. Upon a feature being completed, a pull request was made to bring those changes to the main branch, with the related issues being referenced in the pull request message. This was done to ensure the main branch only contained completed, tested features. All pull requests were peer reviewed by at least one other team member before being merged into the main branch, ensuring code quality and consistency.
 
 In addition, a Discord webhook was configured to automatically notify the team when new pull requests were created, updated, or merged. This helped keep everyone informed of ongoing changes and improved visibility of development activity without requiring constant manual checking of GitHub.
-
-\subsection{Deployment}
-The frontend was deployed as a Single Page Application (SPA) using Vercel's free tier. Vercel integrates with GitHub to automatically build and deploy the frontend whenever commits are pushed to configured branches, enabling a rapid deployment workflow.
-
-Supabase was used to host the PostgreSQL database and provide authentication services.
-The API server, which communicates with the database, was deployed as a Render web service using the free tier. Similar to the Vercel frontend deployment, Render integrates with GitHub and automatically builds and deploys the API server whenever commits are pushed to configured branches.
-
-One limitation of this deployment method is that Render's free tier service automatically spins down after 15 minutes of inactivity. When the service has spun down, the first request experiences a cold-start delay and times out while the service restarts. This startup process typically takes approximately one minute before the API becomes responsive to requests again.
 
 \section{Tooling}
 
@@ -337,7 +354,7 @@ Future iterations of the system should introduce adjustable movement requirement
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=1.05\linewidth]{erd.png}
+    \includegraphics[width=1.05\linewidth]{pictures/erd.png}
     \caption{Entity Relationship Diagram of the CityQuest project}
     \label{fig:erd}
 \end{figure}
@@ -355,6 +372,13 @@ Future iterations of the system should introduce adjustable movement requirement
     \caption{Backend Coverage Analysis Results}
     \label{fig:backend-coverage}
 \end{figure}
+
+\begin{figure*}[t]
+    \centering
+    \includegraphics[width=1\linewidth]{system-architecture.png}
+    \caption{Full-stack system architecture diagram}
+    \label{fig:system-architecture}
+\end{figure*}
 
 %\bibliographystyle{abbrv}
 \bibliographystyle{abbrv-doi}
